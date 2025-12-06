@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Details</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+        }
+
+        .card {
+            width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: #2980b9;
+            color: white;
+            border-radius: 6px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Student Details</h2>
+
+    <p><strong>Name:</strong> <%= student.name %></p>
+    <p><strong>Class:</strong> <%= student.class %></p>
+    <p><strong>Phone:</strong> <%= student.phone %></p>
+    <p><strong>Father Name:</strong> <%= student.father %></p>
+    <p><strong>Address:</strong> <%= student.address %></p>
+
+    <a href="/students">Back</a>
+</div>
+
+</body>
+</html>

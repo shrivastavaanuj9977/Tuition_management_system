@@ -1,0 +1,14 @@
+<form method="POST" action="/marks/save">
+  <input type="hidden" name="student_id" value="<%= studentId %>">
+
+  <label>Subject</label>
+  <input type="text" name="subject" required>
+
+  <label>Marks</label>
+  <input type="number" name="marks" required>
+
+  <label>Exam</label>
+  <input type="text" name="exam" required>
+
+  <button>Save</button>
+</form>

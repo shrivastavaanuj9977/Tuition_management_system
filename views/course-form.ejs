@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= course ? 'Edit Course' : 'Course Registration Form' %>
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 12px;
+        }
+
+        .header i {
+            font-size: 28px;
+            color: #667eea;
+        }
+
+        h2 {
+            color: #1a1a1a;
+            font-size: 26px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-cancel {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-cancel:hover {
+            background: #e0e0e0;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .form-info {
+            background: #f0f7ff;
+            padding: 12px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-book"></i>
+            <h2>
+                <%= course ? 'Edit Course' : 'Add New Course' %>
+            </h2>
+        </div>
+
+        <div class="form-info">
+            <i class="fas fa-info-circle"></i> Please fill in all the required fields marked with <span
+                class="required">*</span>
+        </div>
+
+        <form action="<%= course ? '/courses/edit/' + course.id : '/courses/add' %>" method="POST">
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="course_name">Course Name <span class="required">*</span></label>
+                    <input type="text" id="course_name" name="course_name" placeholder="e.g., Mathematics 101"
+                        value="<%= course ? course.course_name : '' %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="course_code">Course Code <span class="required">*</span></label>
+                    <input type="text" id="course_code" name="course_code" placeholder="e.g., MATH101"
+                        value="<%= course ? course.course_code : '' %>" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="teacher_id">Assigned Teacher <span class="required">*</span></label>
+                    <select id="teacher_id" name="teacher_id" required>
+                        <option value="">-- Select Teacher --</option>
+                        <!-- Teachers will be populated from backend -->
+                        <% if (typeof teachers !=='undefined' && teachers.length> 0) { %>
+                            <% teachers.forEach(teacher=> { %>
+                                <option value="<%= teacher.id %>" <% if (course && course.teacher_id===teacher.id) { %>
+                                    selected<% } %>>
+                                        <%= teacher.name %>
+                                </option>
+                                <% }); %>
+                                    <% } %>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="duration">Duration (Weeks) <span class="required">*</span></label>
+                    <input type="number" id="duration" name="duration" placeholder="e.g., 12"
+                        value="<%= course ? course.duration : '' %>" min="1" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fee">Course Fee (₹) <span class="required">*</span></label>
+                    <input type="number" id="fee" name="fee" placeholder="e.g., 5000"
+                        value="<%= course ? course.fee : '' %>" min="0" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="max_students">Max Students <span class="required">*</span></label>
+                    <input type="number" id="max_students" name="max_students" placeholder="e.g., 30"
+                        value="<%= course ? course.max_students : '' %>" min="1" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="status">Status <span class="required">*</span></label>
+                    <select id="status" name="status" required>
+                        <option value="">-- Select Status --</option>
+                        <option <% if (course && course.status==='Active' ) { %>selected<% } %>>Active</option>
+                        <option <% if (course && course.status==='Inactive' ) { %>selected<% } %>>Inactive</option>
+                        <option <% if (course && course.status==='Completed' ) { %>selected<% } %>>Completed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="start_date">Start Date <span class="required">*</span></label>
+                    <input type="date" id="start_date" name="start_date" value="<%= course ? course.start_date : '' %>"
+                        required>
+                </div>
+            </div>
+
+            <div class="form-row full">
+                <div class="form-group">
+                    <label for="description">Course Description</label>
+                    <textarea id="description" name="description"
+                        placeholder="Enter course description (optional)"><%= course ? course.description : '' %></textarea>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-save"></i>
+                    <%= course ? 'Update' : 'Submit' %>
+                </button>
+                <button type="reset" class="btn-cancel">
+                    <i class="fas fa-undo"></i> Reset
+                </button>
+                <a href="/courses" style="flex: 1; text-decoration: none;">
+                    <button type="button" class="btn-cancel" style="width: 100%;">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </button>
+                </a>
+            </div>
+
+        </form>
+    </div>
+
+</body>
+
+</html>
