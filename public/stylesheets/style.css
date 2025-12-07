@@ -249,6 +249,105 @@ table tbody tr:hover {
   background: #f8f9fa;
 }
 
+/* Student list layout and form styles */
+.split-layout {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.main-section {
+  flex: 2;
+}
+
+.sidebar {
+  flex: 1;
+  min-width: 320px;
+  background: white;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  height: fit-content;
+}
+
+.toolbar {
+  margin-bottom: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.search-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.search-form input[type="text"] {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #dfe6ef;
+  min-width: 220px;
+}
+
+.student-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.student-form label {
+  font-weight: 600;
+  color: #333;
+  font-size: 13px;
+}
+
+.student-form input,
+.student-form select,
+.student-form textarea {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e6edf3;
+  background: #fff;
+  color: #333;
+  font-size: 14px;
+}
+
+.student-form textarea {
+  resize: vertical;
+}
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: #f1f5f9;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: #667eea;
+  color: white;
+  border-color: #5966d4;
+}
+
+.add-link {
+  margin-left: auto;
+  text-decoration: none;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .split-layout {
+    flex-direction: column-reverse;
+  }
+  .sidebar {
+    width: 100%;
+  }
+}
+
 .status-badge {
   display: inline-block;
   padding: 6px 12px;
@@ -272,6 +371,77 @@ table tbody tr:hover {
   padding: 40px;
   color: #999;
   font-size: 16px;
+}
+
+/* Card wrapper (table area) to match screenshot */
+.card {
+  background: white;
+  border-radius: 6px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  margin-bottom: 30px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+}
+
+.btn-add {
+  display: inline-block;
+  background: #28a745;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.card-body {
+  padding-top: 6px;
+}
+
+/* Student table specific look */
+.student-table thead {
+  background: #0a7bff;
+}
+
+.student-table thead th {
+  color: white;
+  padding: 12px 16px;
+  font-weight: 700;
+}
+
+.student-table tbody td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.action-btn {
+  display: inline-block;
+  padding: 6px 10px;
+  margin-left: 6px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.btn-edit {
+  background: #f59e0b;
+}
+.btn-delete {
+  background: #ef4444;
+}
+
+/* Make the main page title area larger and centered like screenshot */
+.page-title {
+  font-size: 26px;
+  color: #0a58ca;
+  margin: 6px 0 18px 0;
+  font-weight: 700;
 }
 
 /* Footer */

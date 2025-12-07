@@ -1,0 +1,58 @@
+<% var pageTitle="Teachers" ; %>
+    <% include partials/header %>
+
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <a href="/teachers/add" class="btn-add">+ Add More Teacher</a>
+                </div>
+
+                <div class="card-body">
+                    <section class="main-section">
+                        <h1 class="page-title">Teacher List</h1>
+
+                        <% if (Array.isArray(teachers) && teachers.length) { %>
+                            <table class="table student-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% teachers.forEach(function(t){ %>
+                                        <tr>
+                                            <td>
+                                                <%= t.id %>
+                                            </td>
+                                            <td>
+                                                <%= t.name %>
+                                            </td>
+                                            <td>
+                                                <%= t.email %>
+                                            </td>
+                                            <td>
+                                                <%= t.phone %>
+                                            </td>
+                                            <td>
+                                                <a class="action-btn btn-edit"
+                                                    href="/teachers/edit/<%= t.id %>">Edit</a>
+                                                <a class="action-btn btn-delete" href="/teachers/delete/<%= t.id %>"
+                                                    onclick="return confirm('Delete this teacher?');">Delete</a>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                            <% } else { %>
+                                <div class="no-data">No teachers found.</div>
+                                <% } %>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <% include partials/footer %>

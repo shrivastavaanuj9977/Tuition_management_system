@@ -1,0 +1,65 @@
+<% var pageTitle="Courses" ; %>
+    <% include partials/header %>
+
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <a href="/courses/add" class="btn-add">+ Add More Course</a>
+                </div>
+
+                <div class="card-body">
+                    <section class="main-section">
+                        <h1 class="page-title">Courses List</h1>
+
+                        <% if (Array.isArray(courses) && courses.length) { %>
+                            <table class="table student-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Course Name</th>
+                                        <th>Code</th>
+                                        <th>Teacher</th>
+                                        <th>Duration</th>
+                                        <th>Fee</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% courses.forEach(function(c){ %>
+                                        <tr>
+                                            <td>
+                                                <%= c.id %>
+                                            </td>
+                                            <td>
+                                                <%= c.course_name %>
+                                            </td>
+                                            <td>
+                                                <%= c.course_code %>
+                                            </td>
+                                            <td>
+                                                <%= c.teacher_name || '—' %>
+                                            </td>
+                                            <td>
+                                                <%= c.duration %>
+                                            </td>
+                                            <td>
+                                                <%= c.fee %>
+                                            </td>
+                                            <td>
+                                                <a class="action-btn btn-edit" href="/courses/edit/<%= c.id %>">Edit</a>
+                                                <a class="action-btn btn-delete" href="/courses/delete/<%= c.id %>"
+                                                    onclick="return confirm('Delete this course?');">Delete</a>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                            <% } else { %>
+                                <div class="no-data">No courses found.</div>
+                                <% } %>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <% include partials/footer %>
