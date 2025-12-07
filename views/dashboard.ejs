@@ -1,476 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
+<% var pageTitle="Dashboard" ; %>
+    <% include partials/header %>
+        <!-- Main Content -->
+        <div class="container">
+            <h1 class="page-title">Dashboard</h1>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Tuition Management System - Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f2f5;
-        }
-
-        /* Header Navigation */
-        .header {
-            background: linear-gradient(135deg, #6a56d6 0%, #7b4fc6 100%);
-            padding: 0 28px;
-            height: 72px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .header-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: white;
-            font-size: 20px;
-            font-weight: 700;
-            text-decoration: none;
-            margin-right: 24px;
-        }
-
-        .header-brand i {
-            font-size: 28px;
-        }
-
-        .header-nav {
-            display: flex;
-            gap: 18px;
-            list-style: none;
-            margin-left: auto;
-            align-items: center;
-        }
-
-        .header-nav li {
-            list-style: none;
-        }
-
-        .header-nav a {
-            color: rgba(255, 255, 255, 0.95);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: background 0.18s, transform 0.12s;
-            font-size: 14px;
-            opacity: 0.95;
-        }
-
-        .header-nav a:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-1px);
-        }
-
-        /* Reports dropdown */
-        .header-nav li {
-            position: relative;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-            display: none;
-            min-width: 200px;
-            z-index: 50;
-            padding: 6px 0;
-        }
-
-        .header-nav li:hover .dropdown-menu {
-            display: block;
-        }
-
-        .dropdown-menu li a {
-            color: #333;
-            padding: 10px 16px;
-            display: block;
-            text-decoration: none;
-        }
-
-        .dropdown-menu li a:hover {
-            background: #f4f6fb;
-        }
-
-        .header-nav a.active {
-            background: rgba(255, 255, 255, 0.18);
-            box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.04);
-        }
-
-        /* Main Container */
-        .container {
-            padding: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .page-title {
-            font-size: 32px;
-            color: #1a1a1a;
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-        }
-
-        .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .stat-icon.blue {
-            background: #4a90e2;
-        }
-
-        .stat-icon.green {
-            background: #2dcc71;
-        }
-
-        .stat-icon.orange {
-            background: #f39c12;
-        }
-
-        .stat-icon.purple {
-            background: #9b59b6;
-        }
-
-        .stat-content h3 {
-            font-size: 14px;
-            color: #666;
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .stat-content .number {
-            font-size: 32px;
-            font-weight: bold;
-            color: #1a1a1a;
-        }
-
-        /* Recent Enrollments Section */
-        .section-box {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            padding: 30px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .section-header h2 {
-            font-size: 22px;
-            color: #1a1a1a;
-            font-weight: 600;
-        }
-
-        .view-all-btn {
-            background: #667eea;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            text-decoration: none;
-            display: inline-block;
-            transition: background 0.3s;
-        }
-
-        .view-all-btn:hover {
-            background: #5568d3;
-        }
-
-        /* Table Styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        table thead {
-            background: #f8f9fa;
-            border-bottom: 2px solid #e9ecef;
-        }
-
-        table thead th {
-            padding: 15px;
-            text-align: left;
-            font-weight: 600;
-            color: #495057;
-            font-size: 14px;
-        }
-
-        table tbody td {
-            padding: 15px;
-            border-bottom: 1px solid #e9ecef;
-            color: #495057;
-        }
-
-        table tbody tr:hover {
-            background: #f8f9fa;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .status-active {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .no-data {
-            text-align: center;
-            padding: 40px;
-            color: #999;
-            font-size: 16px;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #666;
-            border-top: 1px solid #e9ecef;
-            margin-top: 40px;
-            font-size: 14px;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- Header Navigation -->
-    <header class="header">
-        <a href="/" class="header-brand">
-            <i class="fas fa-graduation-cap"></i>
-            Tuition Management
-        </a>
-        <ul class="header-nav">
-            <li><a href="/dashboard" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="/students"><i class="fas fa-users"></i> Students</a></li>
-            <li><a href="/teachers"><i class="fas fa-chalkboard-user"></i> Teachers</a></li>
-            <li><a href="/courses"><i class="fas fa-book"></i> Courses</a></li>
-            <li><a href="/fees/all"><i class="fas fa-credit-card"></i> Payments</a></li>
-            <li>
-                <a href="#"><i class="fas fa-file-alt"></i> Reports <i class="fas fa-caret-down"
-                        style="margin-left:6px;font-size:12px;"></i></a>
-                <ul class="dropdown-menu">
-                    <li><a href="/reports/student">Student Report</a></li>
-                    <li><a href="/reports/payment">Payment Report</a></li>
-                    <li><a href="/reports/teacher">Teachers Report</a></li>
-                    <li><a href="/reports/course">Courses Report</a></li>
-                </ul>
-            </li>
-        </ul>
-    </header>
-
-    <!-- Main Content -->
-    <div class="container">
-        <h1 class="page-title">Dashboard</h1>
-
-        <!-- Stats Grid -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon blue">
-                    <i class="fas fa-users"></i>
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Total Students</h3>
+                        <div class="number">
+                            <%= totalStudents %>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-content">
-                    <h3>Total Students</h3>
-                    <div class="number">
-                        <%= totalStudents %>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-chalkboard-user"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Total Teachers</h3>
+                        <div class="number">
+                            <%= totalTeachers %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Active Courses</h3>
+                        <div class="number">
+                            <%= totalCourses %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Monthly Revenue</h3>
+                        <div class="number">₹<%= totalPayments %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Present Today</h3>
+                        <div class="number">
+                            <%= presentToday %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>Absent Today</h3>
+                        <div class="number">
+                            <%= absentToday %>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="stat-card">
-                <div class="stat-icon green">
-                    <i class="fas fa-chalkboard-user"></i>
+            <!-- Recent Attendance -->
+            <div class="section-box">
+                <div class="section-header">
+                    <h2>Today's Attendance</h2>
+                    <a href="/attendance/mark" class="view-all-btn">Mark Attendance</a>
                 </div>
-                <div class="stat-content">
-                    <h3>Total Teachers</h3>
-                    <div class="number">
-                        <%= totalTeachers %>
-                    </div>
-                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (recentAttendance && recentAttendance.length> 0) { %>
+                            <% recentAttendance.forEach(record=> { %>
+                                <tr>
+                                    <td>
+                                        <%= record.name %>
+                                    </td>
+                                    <td>
+                                        <%= record.date %>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="status-badge <% if (record.status === 'Present') { %>status-active<% } else { %>status-pending<% } %>">
+                                            <%= record.status %>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="3" class="no-data">No attendance records for today</td>
+                                        </tr>
+                                        <% } %>
+                    </tbody>
+                </table>
             </div>
 
-            <div class="stat-card">
-                <div class="stat-icon orange">
-                    <i class="fas fa-book"></i>
+            <!-- Recent Enrollments -->
+            <div class="section-box">
+                <div class="section-header">
+                    <h2>Recent Enrollments</h2>
+                    <a href="/courses" class="view-all-btn">View All Courses</a>
                 </div>
-                <div class="stat-content">
-                    <h3>Active Courses</h3>
-                    <div class="number">
-                        <%= totalCourses %>
-                    </div>
-                </div>
-            </div>
 
-            <div class="stat-card">
-                <div class="stat-icon purple">
-                    <i class="fas fa-rupee-sign"></i>
-                </div>
-                <div class="stat-content">
-                    <h3>Monthly Revenue</h3>
-                    <div class="number">₹<%= totalPayments %>
-                    </div>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon blue">
-                    <i class="fas fa-user-check"></i>
-                </div>
-                <div class="stat-content">
-                    <h3>Present Today</h3>
-                    <div class="number">
-                        <%= presentToday %>
-                    </div>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon green">
-                    <i class="fas fa-user-clock"></i>
-                </div>
-                <div class="stat-content">
-                    <h3>Absent Today</h3>
-                    <div class="number">
-                        <%= absentToday %>
-                    </div>
-                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Course</th>
+                            <th>Enrollment Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4" class="no-data">No recent enrollments</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <!-- Recent Attendance -->
-        <div class="section-box">
-            <div class="section-header">
-                <h2>Today's Attendance</h2>
-                <a href="/attendance/mark" class="view-all-btn">Mark Attendance</a>
-            </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Student Name</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% if (recentAttendance && recentAttendance.length> 0) { %>
-                        <% recentAttendance.forEach(record=> { %>
-                            <tr>
-                                <td>
-                                    <%= record.name %>
-                                </td>
-                                <td>
-                                    <%= record.date %>
-                                </td>
-                                <td>
-                                    <span
-                                        class="status-badge <% if (record.status === 'Present') { %>status-active<% } else { %>status-pending<% } %>">
-                                        <%= record.status %>
-                                    </span>
-                                </td>
-                            </tr>
-                            <% }); %>
-                                <% } else { %>
-                                    <tr>
-                                        <td colspan="3" class="no-data">No attendance records for today</td>
-                                    </tr>
-                                    <% } %>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Recent Enrollments -->
-        <div class="section-box">
-            <div class="section-header">
-                <h2>Recent Enrollments</h2>
-                <a href="/courses" class="view-all-btn">View All Courses</a>
-            </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Student</th>
-                        <th>Course</th>
-                        <th>Enrollment Date</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="4" class="no-data">No recent enrollments</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Tuition Management System. All rights reserved.</p>
-    </footer>
-
-</body>
-
-</html>
+        <% include partials/footer %>

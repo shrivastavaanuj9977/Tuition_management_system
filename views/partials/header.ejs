@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= pageTitle || 'Tuition Management System' %>
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <a href="/" class="header-brand">
+            <i class="fas fa-graduation-cap"></i>
+            Tuition Management
+        </a>
+        <ul class="header-nav">
+            <li><a href="/dashboard" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="/students"><i class="fas fa-users"></i> Students</a></li>
+            <li><a href="/teachers"><i class="fas fa-chalkboard-user"></i> Teachers</a></li>
+            <li><a href="/courses"><i class="fas fa-book"></i> Courses</a></li>
+            <li><a href="/fees/all"><i class="fas fa-credit-card"></i> Payments</a></li>
+            <li>
+                <a href="#"><i class="fas fa-file-alt"></i> Reports <i class="fas fa-caret-down"
+                        style="margin-left:6px;font-size:12px;"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/reports/student">Student Report</a></li>
+                    <li><a href="/reports/payment">Payment Report</a></li>
+                    <li><a href="/reports/teacher">Teachers Report</a></li>
+                    <li><a href="/reports/course">Courses Report</a></li>
+                </ul>
+            </li>
+        </ul>
+    </header>
