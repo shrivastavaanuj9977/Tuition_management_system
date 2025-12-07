@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Report</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        /* Header Navigation */
+        .header {
+            background: linear-gradient(135deg, #6a56d6 0%, #7b4fc6 100%);
+            padding: 0 28px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            margin-right: 24px;
+        }
+
+        .header-brand i {
+            font-size: 28px;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 18px;
+            list-style: none;
+            margin-left: auto;
+            align-items: center;
+        }
+
+        .header-nav li {
+            list-style: none;
+        }
+
+        .header-nav a {
+            color: rgba(255, 255, 255, 0.95);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.18s, transform 0.12s;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .header-nav a:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
+        }
+
+        /* Container */
+        .container {
+            padding: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #1a1a1a;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .page-title i {
+            color: #667eea;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .btn-print {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-export {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-export:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+
+        /* Filter Section */
+        .filter-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .filter-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #1a1a1a;
+            font-size: 14px;
+        }
+
+        input,
+        select {
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-filter {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .btn-filter:hover {
+            background: #5568d3;
+        }
+
+        .btn-reset {
+            background: #e0e0e0;
+            color: #666;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-reset:hover {
+            background: #d0d0d0;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .stat-card.male .stat-value {
+            color: #3498db;
+        }
+
+        .stat-card.female .stat-value {
+            color: #e74c3c;
+        }
+
+        /* Report Table */
+        .report-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .report-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .report-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .report-count {
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        table thead th {
+            padding: 16px 15px;
+            text-align: left;
+            font-weight: 700;
+            color: #495057;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        table tbody tr {
+            border-bottom: 1px solid #e9ecef;
+            transition: background 0.2s;
+        }
+
+        table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        table tbody td {
+            padding: 14px 15px;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        .student-id {
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-male {
+            background: #d6eaf8;
+            color: #1a5490;
+        }
+
+        .badge-female {
+            background: #fadbd8;
+            color: #922b21;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .no-data i {
+            font-size: 48px;
+            color: #ddd;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .no-data p {
+            font-size: 16px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .header,
+            .action-buttons,
+            .filter-card {
+                display: none;
+            }
+
+            .container {
+                padding: 0;
+            }
+
+            table {
+                page-break-inside: avoid;
+            }
+
+            table tbody tr {
+                page-break-inside: avoid;
+            }
+
+            .report-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .action-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .action-buttons .btn {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <a href="/" class="header-brand">
+            <i class="fas fa-graduation-cap"></i>
+            Tuition Management
+        </a>
+        <ul class="header-nav">
+            <li><a href="/dashboard"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="/students"><i class="fas fa-users"></i> Students</a></li>
+            <li><a href="/teachers"><i class="fas fa-chalkboard-user"></i> Teachers</a></li>
+            <li><a href="/courses"><i class="fas fa-book"></i> Courses</a></li>
+            <li><a href="/fees"><i class="fas fa-credit-card"></i> Payments</a></li>
+        </ul>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">
+                <i class="fas fa-file-chart-line"></i>
+                Student Report
+            </h1>
+            <div class="action-buttons">
+                <button class="btn btn-print" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print
+                </button>
+                <button class="btn btn-export" onclick="exportToCSV()">
+                    <i class="fas fa-download"></i> Export CSV
+                </button>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-card">
+            <h3 class="filter-title">
+                <i class="fas fa-filter"></i>
+                Filter Report
+            </h3>
+            <form id="filterForm" method="GET" action="/reports/student">
+                <div class="filter-grid">
+                    <div class="form-group">
+                        <label for="class">Class</label>
+                        <input type="text" id="class" name="class" placeholder="e.g., 10A"
+                            value="<%= typeof filterClass !== 'undefined' ? filterClass : '' %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender">
+                            <option value="">-- All --</option>
+                            <option value="Male" <%=filterGender==='Male' ? 'selected' : '' %>>Male</option>
+                            <option value="Female" <%=filterGender==='Female' ? 'selected' : '' %>>Female</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sortBy">Sort By</label>
+                        <select id="sortBy" name="sortBy">
+                            <option value="name" <%=sortBy==='name' ? 'selected' : '' %>>Student Name</option>
+                            <option value="class" <%=sortBy==='class' ? 'selected' : '' %>>Class</option>
+                            <option value="phone" <%=sortBy==='phone' ? 'selected' : '' %>>Phone</option>
+                            <option value="id" <%=sortBy==='id' ? 'selected' : '' %>>ID</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-buttons" style="grid-column: span 1;">
+                        <button type="submit" class="btn-filter">
+                            <i class="fas fa-search"></i> Apply Filter
+                        </button>
+                        <a href="/reports/student" class="btn-reset"
+                            style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+                            <i class="fas fa-redo"></i> Reset
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label"><i class="fas fa-users"></i> Total Students</div>
+                <div class="stat-value">
+                    <%= totalStudents %>
+                </div>
+            </div>
+            <div class="stat-card male">
+                <div class="stat-label"><i class="fas fa-mars"></i> Male Students</div>
+                <div class="stat-value">
+                    <%= maleCount %>
+                </div>
+            </div>
+            <div class="stat-card female">
+                <div class="stat-label"><i class="fas fa-venus"></i> Female Students</div>
+                <div class="stat-value">
+                    <%= femaleCount %>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label"><i class="fas fa-book"></i> Classes</div>
+                <div class="stat-value">
+                    <%= uniqueClasses %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Report Table -->
+        <div class="report-card">
+            <div class="report-header">
+                <span class="report-title">Student Details Report</span>
+                <span class="report-count">
+                    <%= students.length %> records
+                </span>
+            </div>
+
+            <% if (students && students.length> 0) { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Student ID</th>
+                            <th>Student Name</th>
+                            <th>Class</th>
+                            <th>Father Name</th>
+                            <th>Mother Name</th>
+                            <th>Date of Birth</th>
+                            <th>Gender</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% students.forEach((student, index)=> { %>
+                            <tr>
+                                <td>
+                                    <%= index + 1 %>
+                                </td>
+                                <td class="student-id">#<%= student.id %>
+                                </td>
+                                <td class="student-name">
+                                    <%= student.name %>
+                                </td>
+                                <td><strong>
+                                        <%= student.class %>
+                                    </strong></td>
+                                <td>
+                                    <%= student.father || '-' %>
+                                </td>
+                                <td>
+                                    <%= student.mother || '-' %>
+                                </td>
+                                <td>
+                                    <%= student.dob ? new Date(student.dob).toLocaleDateString() : '-' %>
+                                </td>
+                                <td>
+                                    <span
+                                        class="badge <%= 'badge-' + (student.gender ? student.gender.toLowerCase() : 'male') %>">
+                                        <%= student.gender || '-' %>
+                                    </span>
+                                </td>
+                                <td>
+                                    <%= student.phone %>
+                                </td>
+                                <td>
+                                    <%= student.email || '-' %>
+                                </td>
+                                <td>
+                                    <%= student.address || '-' %>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+                <% } else { %>
+                    <div class="no-data">
+                        <i class="fas fa-inbox"></i>
+                        <p>No student records found</p>
+                    </div>
+                    <% } %>
+        </div>
+    </div>
+
+    <script>
+        function exportToCSV() {
+            const table = document.querySelector('table');
+            if (!table) {
+                alert('No data to export');
+                return;
+            }
+
+            let csv = [];
+            let rows = table.querySelectorAll('tr');
+
+            for (let i = 0; i < rows.length; i++) {
+                let row = [], cols = rows[i].querySelectorAll('td, th');
+
+                for (let j = 0; j < cols.length; j++) {
+                    let text = cols[j].innerText;
+                    text = text.replace(/"/g, '""');
+                    row.push('"' + text + '"');
+                }
+
+                csv.push(row.join(','));
+            }
+
+            let csvFile = new Blob([csv.join('\n')], { type: 'text/csv' });
+            let csvUrl = URL.createObjectURL(csvFile);
+            let link = document.createElement('a');
+            link.href = csvUrl;
+            link.download = 'student_report_' + new Date().getTime() + '.csv';
+            link.click();
+        }
+    </script>
+
+</body>
+
+</html>
